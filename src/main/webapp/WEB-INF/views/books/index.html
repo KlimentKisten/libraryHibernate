@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Книга</title>
+</head>
+<body>
+
+<p th:text = "${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></p>
+
+<a th:if="${reader}">
+    <a>Эта книга у</a>
+    <a th:text="${reader.getName()}"></a>
+
+    <form th:method="PATCH" th:action="@{/readers/remove/{id}(id=${book.getId()})}">
+        <input type="submit" value="Освободить книгу"/>
+    </form>
+
+    <p></p>
+</a>
+
+<a th:unless="${reader}">
+    <a>Эта книга свободна</a><br>
+
+    <form th:method="PATCH" th:action="@{/books/add/{id}(id=${book.getId()})}">
+        <label for="readerForList">Выберите, кому назначить: </label>
+        <select th:object="${readerForList}" th:field="*{id}" id="readerForList">
+            <option th:each="readerForList:${readers}" th:value="${readerForList.getId()}" th:text="${readerForList.getName()}"></option>
+        </select>
+        <input type="submit" value="Назначить книгу"/>
+    </form>
+
+    <p></p>
+</a>
+
+<hr/> <!--  Создает горизонтальную линию-->
+
+<!--    Создадим кнопку для редактирования человека-->
+<form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+    <input type="submit" value="Редактировать книгу"/>
+</form>
+
+<!--    Кнопка для удаления человека. Используем форму, так как с помощью тега "а" мы можем посылать только GET запросы, а нам нужно послать DELETE запрос-->
+
+<form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+    <input type="submit" value="Удалить книгу"/>
+</form>
+</body>
+</html>

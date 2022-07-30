@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Читатель</title>
+</head>
+<body>
+
+<p th:text = "${reader.getName() + ', ' + reader.getAge()}"></p>
+
+<a th:if="${book}">
+    <a><strong>Книги:</strong></a>
+    <div th:each="book : ${books}">
+        <a th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"/>
+    </div>
+</a>
+
+<a th:unless="${book}">
+    <a>Человек пока не взял ни одной книги</a>
+</a>
+
+<br/> <!--  Создает пустую строку-->
+
+<hr/> <!--  Создает горизонтальную линию-->
+
+<!--    Создадим кнопку для редактирования человека-->
+<form th:method="GET" th:action="@{/readers/{id}/edit(id=${reader.getId()})}">
+    <input type="submit" value="Редактировать читателя"/>
+</form>
+
+<!--    Кнопка для удаления человека. Используем форму, так как с помощью тега "а" мы можем посылать только GET запросы, а нам нужно послать DELETE запрос-->
+
+<form th:method="DELETE" th:action="@{/readers/{id}(id=${reader.getId()})}">
+    <input type="submit" value="Удалить читателя"/>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать читателя</title>
+</head>
+<body>
+
+<form th:method = "PATCH" th:action = "@{/readers/{id}(id=${reader.getId()})}" th:object = "${reader}">
+    <div>
+        <label for = "name">Введите имя читателя</label>
+        <input type = "text" th:field = "*{name}" id = "name"/>
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p><!--    Если поле name имеет ошибки, показать ошибки "message" для поля name-->
+        <br/>
+        <label for = "age">Введите возраст читателя</label>
+        <input type = "text" th:field = "*{age}" id = "age"/>
+        <p th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></p>
+        <br/>
+        <input type="submit" value="Редактировать читателя"/>
+    </div>
+</form>
+
+</body>
+</html>

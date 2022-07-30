@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск книги по названию</title>
+</head>
+<body>
+
+<form th:method = "POST" th:action = "@{/books/search}" th:object = "${book}">
+    <div>
+        <label for = "nameNotFull">Введите название книги</label>
+        <input type = "text" th:field = "*{nameNotFull}" id = "nameNotFull"/>
+        <br/>
+        <input type="submit" value="Искать книгу"/>
+    </div>
+</form>
+
+<a th:if="${book.getName()}">
+    <a th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></a>
+</a>
+
+<p></p>
+
+<a th:if="${reader}">
+    <a>Эта книга у </a>
+    <a th:text="${reader.getName()}"></a>
+</a>
+
+<a th:unless="${reader}">
+    <a th:if="${book.getName()}">
+        <a>Эта книга свободна</a><br>
+    </a>
+</a>
+
+</body>
+</html>
